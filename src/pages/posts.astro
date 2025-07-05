@@ -1,0 +1,39 @@
+---
+import Header from '../components/Header.astro';
+
+// Definir el tipo de los posts
+interface Post {
+  userId: number;
+  id: number;
+  title: string;
+  body: string;
+}
+
+// Fetch de datos en el servidor durante el build
+const response = await fetch('https://jsonplaceholder.typicode.com/posts?_limit=5');
+const posts: Post[] = await response.json();
+---
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publicaciones</title>
+</head>
+<body>
+    <Header />
+    <main style="max-width: 800px; margin: 0 auto;">
+        <h1>Últimas Publicaciones</h1>
+        
+        <div style="display: grid; gap: 2rem;">
+            {posts.map((post: Post) => (
+                <article style="border: 1px solid #ddd; padding: 1rem; border-radius: 4px;">
+                    <h2 style="margin-top: 0;">{post.title}</h2>
+                    <p>{post.body}</p>
+                </article>
+            ))}
+        </div>
+    </main>
+</body>
+</html>

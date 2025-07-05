@@ -1,0 +1,33 @@
+---
+// Frontmatter
+const links = [
+  { text: "Inicio", url: "/" },
+  { text: "Acerca de", url: "/about" },
+  { text: "Contacto", url: "/contact" }
+];
+---
+<header>
+  <nav>
+    <ul style="display: flex; gap: 1rem; list-style: none;">
+      {links.map(link => (
+        <li>
+          <a href={link.url} style="text-decoration: none; color: inherit;">
+            {link.text}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+</header>
+
+<style>
+  header {
+    padding: 1rem;
+    background-color: #f0f0f0;
+    margin-bottom: 2rem;
+  }
+  
+  a:hover {
+    text-decoration: underline !important;
+  }
+</style>

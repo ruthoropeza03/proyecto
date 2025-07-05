@@ -1,0 +1,48 @@
+---
+// El código del frontmatter se ejecuta en el servidor
+const initialCount = 0;
+---
+
+<div id="counter-container">
+    <p>Contador: <span id="count-value">{initialCount}</span></p>
+    <button id="increment-btn" type="button">Incrementar</button>
+    <button id="decrement-btn" type="button">Decrementar</button>
+</div>
+
+<script is:inline>
+// Este código se ejecuta en el cliente
+if (typeof window !== 'undefined') {
+    document.addEventListener('DOMContentLoaded', () => {
+        const countElement = document.getElementById('count-value');
+        const incrementBtn = document.getElementById('increment-btn');
+        const decrementBtn = document.getElementById('decrement-btn');
+        
+        let count = parseInt(countElement.textContent);
+        
+        incrementBtn.addEventListener('click', () => {
+            count++;
+            countElement.textContent = count;
+        });
+        
+        decrementBtn.addEventListener('click', () => {
+            count--;
+            countElement.textContent = count;
+        });
+    });
+}
+</script>
+
+<style>
+#counter-container {
+    margin: 1rem 0;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+button {
+    margin-right: 0.5rem;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}
+</style>
