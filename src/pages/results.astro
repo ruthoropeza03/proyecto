@@ -13,17 +13,96 @@ const rows = await sql`SELECT id, name, email, message, created_at FROM contacts
       <th style="border:1px solid #ccc; padding:0.5rem;">Email</th>
       <th style="border:1px solid #ccc; padding:0.5rem;">Mensaje</th>
       <th style="border:1px solid #ccc; padding:0.5rem;">Fecha</th>
+      <th style="border:1px solid #ccc; padding:0.5rem;">Acciones</th>
     </tr>
   </thead>
-  <tbody>
-    {rows.map((row: any) => (
-      <tr>
+  <tbody id="contacts-table-body">
+    {rows.map((row) => (
+      <tr data-id={row.id}>
         <td style="border:1px solid #ccc; padding:0.5rem;">{row.id}</td>
-        <td style="border:1px solid #ccc; padding:0.5rem;">{row.name}</td>
-        <td style="border:1px solid #ccc; padding:0.5rem;">{row.email}</td>
-        <td style="border:1px solid #ccc; padding:0.5rem;">{row.message}</td>
+        <td style="border:1px solid #ccc; padding:0.5rem;" data-field="name">{row.name}</td>
+        <td style="border:1px solid #ccc; padding:0.5rem;" data-field="email">{row.email}</td>
+        <td style="border:1px solid #ccc; padding:0.5rem;" data-field="message">{row.message}</td>
         <td style="border:1px solid #ccc; padding:0.5rem;">{row.created_at?.toLocaleString?.() ?? row.created_at}</td>
+        <td style="border:1px solid #ccc; padding:0.5rem;">
+          <button onclick="enableEdit(this)">Editar</button>
+          <button onclick="saveEdit(this)" style="display:none;">Guardar</button>
+          <button onclick="cancelEdit(this)" style="display:none;">Cancelar</button>
+        </td>
       </tr>
     ))}
   </tbody>
 </table>
+
+<script is:inline>
+function enableEdit(btn) {
+  const tr = btn.closest('tr');
+  if (!tr) return;
+  tr.querySelectorAll('[data-field]').forEach(editableCellToInput);
+  btn.style.display = 'none';
+  const saveBtn = tr.querySelector('button[onclick^="saveEdit"]');
+  const cancelBtn = tr.querySelector('button[onclick^="cancelEdit"]');
+  if (saveBtn && saveBtn instanceof HTMLElement) saveBtn.style.display = '';
+  if (cancelBtn && cancelBtn instanceof HTMLElement) cancelBtn.style.display = '';
+}
+
+function editableCellToInput(td) {
+  const value = td.textContent;
+  td.innerHTML = `<input value="${value}" style='width:98%'>`;
+}
+
+function cancelEdit(btn) {
+  const tr = btn.closest('tr');
+  if (!tr) return;
+  const id = tr.getAttribute('data-id');
+  fetch(`/api/contact?id=${id}`)
+    .then(res => res.json())
+    .then(function(data) {
+      tr.querySelectorAll('[data-field]').forEach(function(td) { revertCellToText(td, data); });
+      const editBtn = tr.querySelector('button[onclick^="edit"]');
+      const saveBtn = tr.querySelector('button[onclick^="saveEdit"]');
+      const cancelBtn = tr.querySelector('button[onclick^="cancelEdit"]');
+      if (editBtn && editBtn instanceof HTMLElement) editBtn.style.display = '';
+      if (saveBtn && saveBtn instanceof HTMLElement) saveBtn.style.display = 'none';
+      if (cancelBtn && cancelBtn instanceof HTMLElement) cancelBtn.style.display = 'none';
+    });
+}
+
+function revertCellToText(td, data) {
+  const field = td.getAttribute('data-field');
+  if (field && data[field] !== undefined) td.textContent = data[field];
+}
+
+function saveEdit(btn) {
+  const tr = btn.closest('tr');
+  if (!tr) return;
+  const id = tr.getAttribute('data-id');
+  var fields = {};
+  tr.querySelectorAll('[data-field]').forEach(function(td) { collectFieldValue(td, fields); });
+  fetch('/api/contact', {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(Object.assign({ id }, fields))
+  })
+    .then(res => res.json())
+    .then(function(data) {
+      if (data.success) {
+        tr.querySelectorAll('[data-field]').forEach(function(td) { revertCellToText(td, fields); });
+        const editBtn = tr.querySelector('button[onclick^="edit"]');
+        const saveBtn = tr.querySelector('button[onclick^="saveEdit"]');
+        const cancelBtn = tr.querySelector('button[onclick^="cancelEdit"]');
+        if (editBtn && editBtn instanceof HTMLElement) editBtn.style.display = '';
+        if (saveBtn && saveBtn instanceof HTMLElement) saveBtn.style.display = 'none';
+        if (cancelBtn && cancelBtn instanceof HTMLElement) cancelBtn.style.display = 'none';
+      } else {
+        alert('Error al guardar');
+      }
+    });
+}
+
+function collectFieldValue(td, fields) {
+  const field = td.getAttribute('data-field');
+  const input = td.querySelector('input');
+  if (field && input) fields[field] = input.value;
+}
+</script>
