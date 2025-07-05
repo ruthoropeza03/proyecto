@@ -14,8 +14,20 @@
       }
     },
     {
-      "src": ".*",
-      "dest": "/"
+      "src": "/about",
+      "dest": "/about.html"
+    },
+    {
+      "src": "/contact",
+      "dest": "/contact.html"
+    },
+    {
+      "src": "/posts",
+      "dest": "/posts.html"
+    },
+    {
+      "src": "/",
+      "dest": "/index.html"
     }
   ]
 }
