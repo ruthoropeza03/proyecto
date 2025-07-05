@@ -26,6 +26,10 @@
       "dest": "/posts.html"
     },
     {
+      "src": "/results",
+      "dest": "/results.html"
+    },
+    {
       "src": "/assets/(.*)",
       "dest": "/src/assets/$1"
     },
