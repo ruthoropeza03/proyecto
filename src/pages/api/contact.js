@@ -1,8 +1,7 @@
 export const prerender = false;
-import type { APIRoute } from 'astro';
-import sql from '../../lib/db';
+import sql from '../../lib/db.js';
 
-export const POST: APIRoute = async ({ request }) => {
+export async function POST({ request }) {
   try {
     const form = await request.formData();
     const name = form.get('name');
@@ -19,4 +18,4 @@ export const POST: APIRoute = async ({ request }) => {
   } catch (e) {
     return new Response('Error al guardar el contacto', { status: 500 });
   }
-};
+}

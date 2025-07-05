@@ -1,8 +1,7 @@
 export const prerender = false;
-import type { APIRoute } from 'astro';
-import sql from '../../lib/db';
+import sql from '../../lib/db.js';
 
-export const GET: APIRoute = async () => {
+export async function GET() {
   try {
     const response = await sql`SELECT version()`;
     const version = response[0]?.version || 'desconocida';
@@ -16,4 +15,4 @@ export const GET: APIRoute = async () => {
       { status: 500, headers: { 'Content-Type': 'application/json' } }
     );
   }
-};
+}
