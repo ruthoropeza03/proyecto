@@ -13,7 +13,7 @@ let formData = { name: '', email: '', message: '' };
 <Header />
 <main style="max-width: 600px; margin: 0 auto;">
     <h1>Contacto</h1>
-    <form method="GET" action="/assets/gato.jpg" style="display: grid; gap: 1rem;">
+    <form id="contact-form" style="display: grid; gap: 1rem;">
         <div>
             <label for="name">Nombre:</label>
             <input 
@@ -49,3 +49,9 @@ let formData = { name: '', email: '', message: '' };
         </button>
     </form>
 </main>
+<script is:inline>
+document.getElementById('contact-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    window.location.href = 'https://scontent.fbrm1-1.fna.fbcdn.net/v/t39.30808-6/469597680_1157393195749013_4069947367577901313_n.jpg?stp=dst-jpg_p526x296_tt6&_nc_cat=106&ccb=1-7&_nc_sid=833d8c&_nc_ohc=KH02U1UWdEcQ7kNvwHVJWt-&_nc_oc=AdkC9q2YOzvyIMsrIgMCh5dkfQ1GzfPY0nVISbyIJtXwp9aYv71tc-RUmH8WgeH3tRk&_nc_zt=23&_nc_ht=scontent.fbrm1-1.fna&_nc_gid=FTxncJ993gMkPClE18Zk0A&oh=00_AfQJfN-t0UM0txJNArig_FL3Fy8ItSRkdZmmoquz47djXA&oe=686E4650';
+});
+</script>
