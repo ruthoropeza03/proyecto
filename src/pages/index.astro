@@ -5,26 +5,16 @@ import Counter from '../components/Counter.astro';
 const nombre = "Mundo";  // Definimos la variable nombre
 const visitas = 1000;    // Definimos la variable visitas
 ---
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Primer Sitio Astro</title>
-</head>
-<body>
-	<Header />
-    <h1>Hola, {nombre}!</h1>
-    <p>Bienvenido a mi sitio Astro desplegado en Vercel</p>
-    <p>Visitas totales: {visitas.toLocaleString()}</p>
-    <Counter />
-    <section>
-        <h2>Características de Astro</h2>
-        <ul>
-            <li>Rápido</li>
-            <li>Moderno</li>
-            <li>Fácil de usar</li>
-        </ul>
-    </section>
-</body>
-</html>
+<Header />
+<h1>Hola, {nombre}!</h1>
+<p>Bienvenido a mi sitio Astro desplegado en Vercel</p>
+<p>Visitas totales: {visitas.toLocaleString()}</p>
+<Counter />
+<section>
+    <h2>Características de Astro</h2>
+    <ul>
+        <li>Rápido</li>
+        <li>Moderno</li>
+        <li>Fácil de usar</li>
+    </ul>
+</section>
