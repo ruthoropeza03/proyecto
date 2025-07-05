@@ -7,15 +7,15 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "vercel-build": "astro build",
+    "clean": "rm -rf dist .vercel/output",
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/vercel": "^8.2.1",
+    "@astrojs/vercel": "^8.0.4",
     "@neondatabase/serverless": "^1.0.1",
     "@vercel/postgres": "^0.10.0",
     "astro": "^5.11.0"
-  },
-  "devDependencies": {
-    "@types/node": "^24.0.10"
   }
 }
+ 
