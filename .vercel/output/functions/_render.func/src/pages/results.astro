@@ -1,0 +1,29 @@
+---
+import sql from '../lib/db';
+
+// Consulta todos los contactos
+const rows = await sql`SELECT id, name, email, message, created_at FROM contacts ORDER BY created_at DESC`;
+---
+<h1>Contactos recibidos</h1>
+<table style="width:100%; border-collapse:collapse; margin-top:2rem;">
+  <thead>
+    <tr style="background:#f0f0f0;">
+      <th style="border:1px solid #ccc; padding:0.5rem;">ID</th>
+      <th style="border:1px solid #ccc; padding:0.5rem;">Nombre</th>
+      <th style="border:1px solid #ccc; padding:0.5rem;">Email</th>
+      <th style="border:1px solid #ccc; padding:0.5rem;">Mensaje</th>
+      <th style="border:1px solid #ccc; padding:0.5rem;">Fecha</th>
+    </tr>
+  </thead>
+  <tbody>
+    {rows.map((row: any) => (
+      <tr>
+        <td style="border:1px solid #ccc; padding:0.5rem;">{row.id}</td>
+        <td style="border:1px solid #ccc; padding:0.5rem;">{row.name}</td>
+        <td style="border:1px solid #ccc; padding:0.5rem;">{row.email}</td>
+        <td style="border:1px solid #ccc; padding:0.5rem;">{row.message}</td>
+        <td style="border:1px solid #ccc; padding:0.5rem;">{row.created_at?.toLocaleString?.() ?? row.created_at}</td>
+      </tr>
+    ))}
+  </tbody>
+</table>

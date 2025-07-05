@@ -1,11 +1,5 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/static-build"
-    }
-  ],
   "routes": [
     {
       "src": "/_astro/.*",
@@ -32,6 +26,10 @@
     {
       "src": "/assets/(.*)",
       "dest": "/src/assets/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/api/$1"
     },
     {
       "src": "/",

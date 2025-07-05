@@ -1,0 +1,30 @@
+---
+import { neon } from '@neondatabase/serverless';
+
+// Conexión a la DB (asegúrate de tener DATABASE_URL en .env)
+const sql = neon(import.meta.env.DATABASE_URL);
+const response = await sql`SELECT version()`;
+const postgresVersion = response[0].version;
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Prueba de Base de Datos</title>
+</head>
+<body>
+    <h1>Prueba de conexión a Neon Postgres</h1>
+    
+    {postgresVersion ? (
+        <div style="color: green; padding: 1rem; background: #f0f0f0;">
+            ✅ Conexión exitosa! Versión de PostgreSQL: <strong>{postgresVersion}</strong>
+        </div>
+    ) : (
+        <div style="color: red;">
+            ❌ No se pudo conectar a la base de datos
+        </div>
+    )}
+
+    <p>Visita <a href="/">la página principal</a></p>
+</body>
+</html>
