@@ -4,7 +4,96 @@ import sql from '../lib/db';
 // Consulta todos los contactos
 const rows = await sql`SELECT id, name, email, message, created_at FROM contacts ORDER BY created_at DESC`;
 ---
-<h1>Contactos recibidos</h1>
+<!DOCTYPE html>
+<html lang="es">
+  <heead> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contactos Recibidos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+  </heead>
+  <body>
+  <nav class="navbar sticky-top navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Navbar</a>
+    <form class="d-flex" role="search">
+      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+      <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
+    <div class="container my-5">
+      <div class="row">
+
+        <div class="col-sm-12 col-md-9 col-lg-9 col-xl-9">
+          <h1>Contactos recibidos</h1>
+          <div class="table-responsive">
+            <table class="table table-dark table-striped">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Nombre</th>
+                  <th>Email</th>
+                  <th>Mensaje</th>
+                  <th>Fecha</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="contacts-table-body">
+                {rows.map((row) => (
+                  <tr data-id={row.id}>
+                    <td>{row.id}</td>
+                    <td data-field="name">{row.name}</td>
+                    <td data-field="email">{row.email}</td>
+                    <td data-field="message">{row.message}</td>
+                    <td>{new Date(row.created_at).toLocaleString()}</td>
+                    <td>
+                      <button class="btn btn-primary" onclick="enableEdit(this)">Editar</button>
+                      <button class="btn btn-success" onclick="saveEdit(this)" style="display:none;">Guardar</button>
+                      <button class="btn btn-secondary" onclick="cancelEdit(this)" style="display:none;">Cancelar</button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3">
+          <h2>Instrucciones</h2>
+          <p>Para editar un contacto, haz clic en el botón "Editar". Luego, modifica los campos y haz clic en "Guardar" para aplicar los cambios o "Cancelar" para revertir.</p>
+          <p>Los cambios se guardarán automáticamente en la base de datos.</p>
+      </div>
+
+      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+          <div class="card text-center py-5">
+            <div class="card-header">
+              Featured
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">Special title treatment</h5>
+              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+              <a href="/" class="btn btn-primary">Go somewhere</a>
+            </div>
+            <div class="card-footer text-muted">
+              2 days ago
+            </div>
+          </div>
+        </div>
+    </div>
+  </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+<!-- <h1>Contactos recibidos</h1>
 <table style="width:100%; border-collapse:collapse; margin-top:2rem;">
   <thead>
     <tr style="background:#f0f0f0;">
@@ -33,7 +122,7 @@ const rows = await sql`SELECT id, name, email, message, created_at FROM contacts
     ))}
   </tbody>
 </table>
-
+-->
 <script is:inline>
 function enableEdit(btn) {
   const tr = btn.closest('tr');
