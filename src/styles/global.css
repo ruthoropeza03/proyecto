@@ -19,5 +19,57 @@ section, div {
   margin-bottom: 1rem;
 }
 p, h1, h2, h3, h4, h5, h6, li {
-  color: #f0f0f0;
+  color: #f0f0f0 !important;
+}
+
+a:hover {
+    text-decoration: underline !important;
+  }
+
+  /* Navbar fina, responsiva y sin línea inferior */
+.navbar,
+.navbar-thin {
+  min-height: 48px !important;
+  padding-top: 0.25rem !important;
+  padding-bottom: 0.25rem !important;
+  
+  border-bottom: none !important;
+  box-shadow: none !important;
+}
+
+/* Mantén la responsividad de Bootstrap */
+.navbar .navbar-collapse {
+  flex-basis: 100%;
+  flex-grow: 1;
+  align-items: center;
+  
+}
+
+/* Opcional: mejora el aspecto de los ítems en la barra fina */
+.navbar-nav .nav-item {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.dropdown-divider {
+  margin-top: 0.2rem !important;
+  margin-bottom: 0.2rem !important;
+}
+
+.d-flex .form-control {
+    background-color: #343a40; /* Darker background, similar to navbar */
+    color: #e9ecef; /* Light grey text color */
+    border-color: #495057; /* Slightly lighter border color */
+}
+
+.d-flex .form-control::placeholder {
+    color: #ced4da; /* Lighter grey for placeholder */
+    opacity: 0.7;
+}
+
+.d-flex .form-control:focus {
+    background-color: #495057;
+    color: #fff;
+    border-color: #6c757d;
+    box-shadow: 0 0 0 0.25rem rgba(108, 117, 125, 0.25);
 }
