@@ -16,6 +16,7 @@
     "@neondatabase/serverless": "^1.0.1",
     "@vercel/postgres": "^0.10.0",
     "astro": "^5.11.0",
-    "bootstrap": "^5.3.7"
+    "bootstrap": "^5.3.7",
+    "bootstrap-icons": "^1.13.1"
   }
 }
